@@ -2,7 +2,7 @@ import { Field, Message } from 'protobufjs/light';
 import * as ECS from '../src';
 
 describe('engine', () => {
-  class TestComponentType1 extends Message {
+  class TestComponentType1 extends ECS.Component {
     @Field.d(1, 'uint32')
     public int: number = 0;
 
@@ -10,7 +10,7 @@ describe('engine', () => {
     public text: string = '';
   }
 
-  class TestComponentType2 extends Message {
+  class TestComponentType2 extends ECS.Component {
     @Field.d(1, 'uint32')
     public bool: boolean = false;
 

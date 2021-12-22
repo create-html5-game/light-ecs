@@ -1,4 +1,4 @@
-import { Message } from 'protobufjs/light';
+import { Component } from './component';
 
 export class World {
   public nextEntityId: number = 0;
@@ -7,7 +7,7 @@ export class World {
   public entities: Record<number, boolean> = {};
 
   // top level key is component type name. second level key is entity id.
-  public components: Record<string, Record<number, Message>> = {};
+  public components: Record<string, Record<number, Component>> = {};
 
   public createEntity(): number {
     var newEntityId = this.nextEntityId++;
@@ -15,7 +15,7 @@ export class World {
     return newEntityId;
   }
 
-  public addComponentToEntity<T extends Message>(
+  public addComponentToEntity<T extends Component>(
     entityId: number,
     componentType: new () => T
   ): T {

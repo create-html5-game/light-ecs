@@ -1,5 +1,6 @@
 import { World } from './world';
-import { Type, Field, MapField, Message } from 'protobufjs/light';
+import { Type, Field, MapField } from 'protobufjs/light';
+import { Component } from './component';
 
 export class Engine {
   private worldType: Type;
@@ -7,7 +8,7 @@ export class Engine {
   private worldComponentsField: Field;
   private nextComponentFieldId: number;
 
-  constructor(componentTypes: (new () => Message)[]) {
+  constructor(componentTypes: (new () => Component)[]) {
     this.worldType = new Type('World');
 
     var worldNextEntityIdField = new Field('nextEntityId', 1, 'uint32');
@@ -28,7 +29,7 @@ export class Engine {
     });
   }
 
-  private registerComponentType<T extends Message>(
+  private registerComponentType<T extends Component>(
     componentType: new () => T
   ): void {
     var protobufType = (componentType as any).$type;
