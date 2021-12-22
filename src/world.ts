@@ -16,7 +16,7 @@ export class World {
   }
 
   public hasEntity(entityId: number): boolean {
-    return this.entities[entityId] != undefined;
+    return Boolean(this.entities[entityId]);
   }
 
   public destroyEntity(entityId: number): void {
