@@ -1,26 +1,12 @@
-import * as ECS from '../src';
+import {
+  TestComponentType1,
+  TestComponentType2,
+  testEngine,
+} from './testComponentTypes';
 
 describe('engine', () => {
-  class TestComponentType1 extends ECS.Component {
-    @ECS.ComponentField(1, 'uint32')
-    public int: number = 0;
-
-    @ECS.ComponentField(2, 'string')
-    public text: string = '';
-  }
-
-  class TestComponentType2 extends ECS.Component {
-    @ECS.ComponentField(1, 'bool')
-    public bool: boolean = false;
-
-    @ECS.ComponentField(2, 'float')
-    public float: number = 0;
-  }
-
   it('should serialize and deserialize world correctly', () => {
-    const engine = new ECS.Engine([TestComponentType1, TestComponentType2]);
-
-    const world = engine.createWorld();
+    const world = testEngine.createWorld();
 
     // entity 1 has a single component
     const entityId1 = world.createEntity();
@@ -37,8 +23,8 @@ describe('engine', () => {
     e2c2.bool = true;
     e2c2.float = 30;
 
-    const serialized = engine.serializeWorld(world);
-    const deserialized = engine.createWorld(serialized);
+    const serialized = testEngine.serializeWorld(world);
+    const deserialized = testEngine.createWorld(serialized);
 
     expect(deserialized.nextEntityId).toEqual(2);
     expect(deserialized.entities[entityId1]).not.toBeFalsy();

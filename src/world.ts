@@ -15,6 +15,20 @@ export class World {
     return newEntityId;
   }
 
+  public hasEntity(entityId: number): boolean {
+    return this.entities[entityId] != undefined;
+  }
+
+  public destroyEntity(entityId: number): void {
+    if (!this.entities[entityId]) {
+      return;
+    }
+    Object.values(this.components).forEach(componentType => {
+      delete componentType[entityId];
+    });
+    delete this.entities[entityId];
+  }
+
   public addComponentToEntity<T extends Component>(
     entityId: number,
     componentType: new () => T
