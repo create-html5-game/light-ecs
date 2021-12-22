@@ -11,10 +11,10 @@ export class Engine {
   constructor(componentTypes: (new () => Component)[]) {
     this.worldType = new Type('World');
 
-    var worldNextEntityIdField = new Field('nextEntityId', 1, 'uint32');
+    const worldNextEntityIdField = new Field('nextEntityId', 1, 'uint32');
     this.worldType.add(worldNextEntityIdField);
 
-    var worldEntitiesField = new MapField('entities', 2, 'uint32', 'bool');
+    const worldEntitiesField = new MapField('entities', 2, 'uint32', 'bool');
     this.worldType.add(worldEntitiesField);
 
     this.worldComponentsFieldType = new Type('WorldComponents');
@@ -32,7 +32,7 @@ export class Engine {
   private registerComponentType<T extends Component>(
     componentType: new () => T
   ): void {
-    var protobufType = (componentType as any).$type;
+    const protobufType = (componentType as any).$type;
     if (!protobufType) {
       throw new Error(
         'the specified component type is not a valid protobuf message type'
@@ -40,7 +40,7 @@ export class Engine {
     }
     this.worldType.add(protobufType);
 
-    var componentField = new MapField(
+    const componentField = new MapField(
       componentType.name,
       this.nextComponentFieldId++,
       'uint32',
@@ -54,9 +54,9 @@ export class Engine {
   }
 
   public createWorld(serializedBuffer?: Uint8Array): World {
-    var result = new World();
+    const result = new World();
     if (serializedBuffer) {
-      var decoded = this.worldType.decode(serializedBuffer);
+      const decoded = this.worldType.decode(serializedBuffer);
       result.nextEntityId = (decoded as any).nextEntityId;
       result.entities = (decoded as any).entities;
       result.components = (decoded as any).components;

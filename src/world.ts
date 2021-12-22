@@ -10,7 +10,7 @@ export class World {
   public components: Record<string, Record<number, Component>> = {};
 
   public createEntity(): number {
-    var newEntityId = this.nextEntityId++;
+    const newEntityId = this.nextEntityId++;
     this.entities[newEntityId] = true;
     return newEntityId;
   }
@@ -22,14 +22,30 @@ export class World {
     if (!this.entities[entityId]) {
       throw new Error('invalid entity id');
     }
-    var componentTypeName = componentType.name;
+    const componentTypeName = componentType.name;
     if (!this.components[componentTypeName]) {
       throw new Error(
         'the specified component type has not been registered in the engine yet'
       );
     }
-    var newComponent = new componentType();
+    const newComponent = new componentType();
     this.components[componentTypeName][entityId] = newComponent;
     return newComponent;
+  }
+
+  public getComponentFromEntity<T extends Component>(
+    entityId: number,
+    componentType: new () => T
+  ): T | null {
+    if (!this.entities[entityId]) {
+      throw new Error('invalid entity id');
+    }
+    const componentTypeName = componentType.name;
+    if (!this.components[componentTypeName]) {
+      throw new Error(
+        'the specified component type has not been registered in the engine yet'
+      );
+    }
+    return (this.components[componentTypeName][entityId] as T) ?? null;
   }
 }
