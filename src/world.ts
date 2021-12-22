@@ -33,6 +33,22 @@ export class World {
     return newComponent;
   }
 
+  public removeComponentFromEntity<T extends Component>(
+    entityId: number,
+    componentType: new () => T
+  ): void {
+    if (!this.entities[entityId]) {
+      throw new Error('invalid entity id');
+    }
+    const componentTypeName = componentType.name;
+    if (!this.components[componentTypeName]) {
+      throw new Error(
+        'the specified component type has not been registered in the engine yet'
+      );
+    }
+    delete this.components[componentTypeName][entityId];
+  }
+
   public getComponentFromEntity<T extends Component>(
     entityId: number,
     componentType: new () => T
@@ -47,5 +63,19 @@ export class World {
       );
     }
     return (this.components[componentTypeName][entityId] as T) ?? null;
+  }
+
+  public getComponentsFromEntity(entityId: number): Component[] {
+    if (!this.entities[entityId]) {
+      throw new Error('invalid entity id');
+    }
+    const results: Component[] = [];
+    Object.values(this.components).forEach(componentType => {
+      const component = componentType[entityId];
+      if (component) {
+        results.push(component);
+      }
+    });
+    return results;
   }
 }
