@@ -45,5 +45,11 @@ describe('entity', () => {
 
     expect(allComponents).toContain(component1);
     expect(allComponents).toContain(component2);
+
+    world.removeComponentFromEntity(entityId, TestComponentType1);
+
+    const allComponentsAfterRemoval = world.getComponentsFromEntity(entityId);
+    expect(allComponentsAfterRemoval).toHaveLength(1);
+    expect(allComponentsAfterRemoval).toContain(component2);
   });
 });
