@@ -54,19 +54,25 @@ export class Engine {
   }
 
   public createWorld(serializedBuffer?: Uint8Array): World {
-    const result = new World();
     if (serializedBuffer) {
       const decoded = this.worldType.decode(serializedBuffer);
-      result.nextEntityId = (decoded as any).nextEntityId;
-      result.entities = (decoded as any).entities;
-      result.components = (decoded as any).components;
+      return new World(
+        (decoded as any).nextEntityId,
+        (decoded as any).entities,
+        (decoded as any).components
+      );
     } else {
-      Object.keys(this.worldComponentsFieldType.fields).forEach(
-        componentTypeName => {
-          result.components[componentTypeName] = {};
-        }
+      return new World(
+        0,
+        {},
+        Object.fromEntries(
+          Object.keys(this.worldComponentsFieldType.fields).map(
+            componentTypeName => {
+              return [componentTypeName, {}];
+            }
+          )
+        )
       );
     }
-    return result;
   }
 }

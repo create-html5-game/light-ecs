@@ -1,13 +1,13 @@
 import { Component } from './component';
 
 export class World {
-  public nextEntityId: number = 0;
-
-  // key is entity id. value indicates whether the entity is currently active.
-  public entities: Record<number, boolean> = {};
-
-  // top level key is component type name. second level key is entity id.
-  public components: Record<string, Record<number, Component>> = {};
+  constructor(
+    private nextEntityId: number = 0,
+    // key is entity id. value indicates whether the entity is currently active.
+    private entities: Record<number, boolean> = {},
+    // top level key is component type name. second level key is entity id.
+    private components: Record<string, Record<number, Component>> = {}
+  ) {}
 
   public createEntity(): number {
     const newEntityId = this.nextEntityId++;
