@@ -4,22 +4,22 @@ export class World {
   constructor(
     private nextEntityId: number = 0,
     // key is entity id. value indicates whether the entity is currently active.
-    private entities: Record<number, boolean> = {},
+    private entities: Record<string, boolean> = {},
     // top level key is component type name. second level key is entity id.
-    private components: Record<string, Record<number, Component>> = {}
+    private components: Record<string, Record<string, Component>> = {}
   ) {}
 
-  public createEntity(): number {
+  public createEntity(): string {
     const newEntityId = this.nextEntityId++;
     this.entities[newEntityId] = true;
-    return newEntityId;
+    return newEntityId.toFixed(0);
   }
 
-  public hasEntity(entityId: number): boolean {
+  public hasEntity(entityId: string): boolean {
     return Boolean(this.entities[entityId]);
   }
 
-  public destroyEntity(entityId: number): void {
+  public destroyEntity(entityId: string): void {
     if (!this.entities[entityId]) {
       return;
     }
@@ -30,7 +30,7 @@ export class World {
   }
 
   public addComponentToEntity<T extends Component>(
-    entityId: number,
+    entityId: string,
     componentType: new () => T
   ): T {
     if (!this.entities[entityId]) {
@@ -48,7 +48,7 @@ export class World {
   }
 
   public removeComponentFromEntity<T extends Component>(
-    entityId: number,
+    entityId: string,
     componentType: new () => T
   ): void {
     if (!this.entities[entityId]) {
@@ -64,7 +64,7 @@ export class World {
   }
 
   public getComponentFromEntity<T extends Component>(
-    entityId: number,
+    entityId: string,
     componentType: new () => T
   ): T | null {
     if (!this.entities[entityId]) {
@@ -79,7 +79,7 @@ export class World {
     return (this.components[componentTypeName][entityId] as T) ?? null;
   }
 
-  public getComponentsFromEntity(entityId: number): Component[] {
+  public getComponentsFromEntity(entityId: string): Component[] {
     if (!this.entities[entityId]) {
       throw new Error('invalid entity id');
     }
@@ -91,5 +91,15 @@ export class World {
       }
     });
     return results;
+  }
+
+  public getEntitiesWithComponent(
+    componentType: new () => Component
+  ): string[] {
+    const entities = this.components[componentType.name];
+    if (entities) {
+      return Object.keys(entities);
+    }
+    return [];
   }
 }

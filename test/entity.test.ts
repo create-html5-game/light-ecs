@@ -11,7 +11,7 @@ describe('entity', () => {
     const entityId = world.createEntity();
 
     expect(world.hasEntity(entityId)).toBeTruthy();
-    expect(world.hasEntity(entityId + 1)).toBeFalsy();
+    expect(world.hasEntity(entityId + '1')).toBeFalsy();
 
     world.destroyEntity(entityId);
 

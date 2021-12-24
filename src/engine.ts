@@ -14,7 +14,7 @@ export class Engine {
     const worldNextEntityIdField = new Field('nextEntityId', 1, 'uint32');
     this.worldType.add(worldNextEntityIdField);
 
-    const worldEntitiesField = new MapField('entities', 2, 'uint32', 'bool');
+    const worldEntitiesField = new MapField('entities', 2, 'string', 'bool');
     this.worldType.add(worldEntitiesField);
 
     this.worldComponentsFieldType = new Type('WorldComponents');
@@ -43,7 +43,7 @@ export class Engine {
     const componentField = new MapField(
       componentType.name,
       this.nextComponentFieldId++,
-      'uint32',
+      'string',
       protobufType.name
     );
     this.worldComponentsFieldType.add(componentField);

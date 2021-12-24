@@ -26,10 +26,6 @@ describe('engine', () => {
     const serialized = testEngine.serializeWorld(world);
     const deserialized = testEngine.createWorld(serialized);
 
-    // expect(deserialized.nextEntityId).toEqual(2);
-    // expect(deserialized.entities[entityId1]).not.toBeFalsy();
-    // expect(deserialized.entities[entityId2]).not.toBeFalsy();
-
     const e1c1Deserialized = deserialized.getComponentFromEntity(
       entityId1,
       TestComponentType1
