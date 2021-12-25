@@ -1,7 +1,7 @@
 # LightECS
 
 ![NPM](https://img.shields.io/npm/v/light-ecs)
-![Downloads](https://img.shields.io/npm/dw/light-ecs)
+![Build](https://github.com/create-html5-game/light-ecs/workflows/CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/create-html5-game/light-ecs/badge.svg?branch=main)](https://coveralls.io/github/create-html5-game/light-ecs?branch=main)
 ![License](https://img.shields.io/npm/l/light-ecs)
 ![PR Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
