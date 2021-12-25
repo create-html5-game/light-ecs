@@ -3,6 +3,10 @@
   "version": "0.2.0",
   "license": "MIT",
   "author": "Kun Chen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/create-html5-game/light-ecs.git"
+  },
   "main": "dist/index.js",
   "module": "dist/light-ecs.esm.js",
   "typings": "dist/index.d.ts",
