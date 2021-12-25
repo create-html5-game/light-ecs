@@ -1,6 +1,6 @@
 {
   "name": "light-ecs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "author": "Kun Chen",
   "main": "dist/index.js",
@@ -17,7 +17,14 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test"
+    "test": "dts test",
+    "publish:no-bump": "git checkout publish-to-npm && git pull && git merge --no-edit --no-ff main && git push && git checkout main",
+    "publish:patch": "git checkout main && bump patch -t \"v%s\" -p && yarn publish:no-bump",
+    "publish:minor": "git checkout main && bump minor -t \"v%s\" -p && yarn publish:no-bump",
+    "publish:major": "git checkout main && bump major -t \"v%s\" -p && yarn publish:no-bump",
+    "pre:patch": "bump prepatch -t \"v%s-beta\" -p && cross-env npm_config_registry=https://registry.npmjs.org/ npm publish --tag beta",
+    "pre:minor": "bump preminor -t \"v%s-beta\" -p && cross-env npm_config_registry=https://registry.npmjs.org/ npm publish --tag beta",
+    "pre:major": "bump premajor -t \"v%s-beta\" -p && cross-env npm_config_registry=https://registry.npmjs.org/ npm publish --tag beta"
   },
   "husky": {
     "hooks": {
@@ -56,7 +63,8 @@
     "husky": "^7.0.4",
     "size-limit": "^7.0.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "version-bump-prompt": "^6.1.0"
   },
   "dependencies": {
     "protobufjs": "^6.11.2"
