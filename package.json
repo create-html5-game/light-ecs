@@ -1,8 +1,12 @@
 {
   "name": "light-ecs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "author": "Kun Chen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/create-html5-game/light-ecs.git"
+  },
   "main": "dist/index.js",
   "module": "dist/light-ecs.esm.js",
   "typings": "dist/index.d.ts",
@@ -18,6 +22,7 @@
     "size": "size-limit",
     "start": "dts watch",
     "test": "dts test",
+    "coverage": "dts test --coverage && cat ./coverage/lcov.info | coveralls",
     "publish:no-bump": "git checkout publish-to-npm && git pull && git merge --no-edit --no-ff main && git push && git checkout main",
     "publish:patch": "git checkout main && bump patch -t \"v%s\" -p && yarn publish:no-bump",
     "publish:minor": "git checkout main && bump minor -t \"v%s\" -p && yarn publish:no-bump",
@@ -58,6 +63,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^7.0.4",
     "@tsconfig/recommended": "^1.0.1",
+    "coveralls": "^3.1.1",
     "dts-cli": "^1.1.3",
     "eslint-config-react-app": "^7.0.0",
     "husky": "^7.0.4",
