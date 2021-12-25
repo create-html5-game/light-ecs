@@ -180,12 +180,12 @@ export abstract class System {
       componentType14,
       componentType15,
       componentType16,
-    ].filter(t => Boolean(t)) as (new () => Component)[];
+    ].filter((t) => Boolean(t)) as (new () => Component)[];
 
     const counter: Record<string, number> = {};
-    requestedComponentTypes.forEach(t => {
+    requestedComponentTypes.forEach((t) => {
       const entityIds = world.getEntitiesWithComponent(t);
-      entityIds.forEach(id => {
+      entityIds.forEach((id) => {
         if (!counter[id]) {
           counter[id] = 1;
         } else {

@@ -23,7 +23,7 @@ export class World {
     if (!this.entities[entityId]) {
       return;
     }
-    Object.values(this.components).forEach(componentType => {
+    Object.values(this.components).forEach((componentType) => {
       delete componentType[entityId];
     });
     delete this.entities[entityId];
@@ -84,7 +84,7 @@ export class World {
       throw new Error('invalid entity id');
     }
     const results: Component[] = [];
-    Object.values(this.components).forEach(componentType => {
+    Object.values(this.components).forEach((componentType) => {
       const component = componentType[entityId];
       if (component) {
         results.push(component);

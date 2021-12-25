@@ -24,7 +24,7 @@ export class Engine {
 
     this.nextComponentFieldId = 1;
 
-    componentTypes.forEach(t => {
+    componentTypes.forEach((t) => {
       this.registerComponentType(t);
     });
   }
@@ -67,7 +67,7 @@ export class Engine {
         {},
         Object.fromEntries(
           Object.keys(this.worldComponentsFieldType.fields).map(
-            componentTypeName => {
+            (componentTypeName) => {
               return [componentTypeName, {}];
             }
           )
