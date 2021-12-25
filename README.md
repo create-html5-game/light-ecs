@@ -1,103 +1,69 @@
-# DTS User Guide
+# LightECS
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with DTS. Let’s get you oriented with what’s here and how to use it.
+![NPM](https://img.shields.io/npm/v/light-ecs)
+![Downloads](https://img.shields.io/npm/dw/light-ecs)
+[![Coverage Status](https://coveralls.io/repos/github/create-html5-game/light-ecs/badge.svg?branch=main)](https://coveralls.io/github/create-html5-game/light-ecs?branch=main)
+![License](https://img.shields.io/npm/l/light-ecs)
+![PR Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-> This DTS setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+A performant Entity Component System library for Typescript and Javascript.
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+## What is ECS
 
-## Commands
+> Entity–component–system (ECS) is an architectural pattern that is mostly used in game development. ECS follows the composition over inheritance principle that allows greater flexibility in defining entities where every object in a game's scene is an entity (e.g. enemies, bullets, vehicles, etc.). Every entity consists of one or more components which contains data or state.
 
-DTS scaffolds your new library inside `/src`.
+_- [Wikipedia](https://en.wikipedia.org/wiki/Entity_component_system)_
 
-To run DTS, use:
+## Key Features of LightECS
 
-```bash
-npm start # or yarn start
+- Efficient serialization support for networked games/applications.
+- Written in Typescript for a strong-typed workflow.
+
+## Installation
+
+```
+npm i light-ecs
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
-
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.ts        # EDIT THIS
-/test
-  index.test.ts   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```
+yarn add light-ecs
 ```
 
-### Rollup
+## Usage
 
-DTS uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `dts` [optimizations docs](https://github.com/weiran-zsd/dts-cli#optimizations). In particular, know that you can take advantage of development-only optimizations:
+First create an ECS instance:
 
 ```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
+const ecs = new ECS();
 ```
 
-You can also choose to install and use [invariant](https://github.com/weiran-zsd/dts-cli#invariant) and [warning](https://github.com/weiran-zsd/dts-cli#warning) functions.
+The ECS constructor takes two arguments:
 
-## Module Formats
+- `max: number = 1e4` which is the hard limit for the number of entities at a single time.
+- `defer: boolean = false` which sets the value of `ecs.DEFAULT_DEFER`, which I'll get to later.
 
-CJS, ESModules, and UMD module formats are supported.
+Use `ecs.bind()` to bind the value of `this` to the methods which allows omission of the `ecs.` prefix.
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+```js
+const ecs = new ECS()
+const {
+  defineComponent,
+  createQuery,
+  createEntity,
+  etc.
+} = ecs.bind()
+```
 
-## Named Exports
+### Define components
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+Components are defined using `ecs.defineComponent`:
 
-## Including Styles
+```js
+const myComponent = ecs.defineComponent(types.u8);
+const position = ecs.defineComponent({
+  x: types.f64,
+  y: types.f64,
+});
+```
 
-There are many ways to ship styles, including with CSS-in-JS. DTS has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+The object passed defines the shape of the component. Types are declared using the `types` constant.
