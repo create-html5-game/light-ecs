@@ -1,6 +1,9 @@
 import { Component } from './component';
 import { World } from './world';
 
+/**
+ * Extend this class to implement your own systems.
+ */
 export abstract class System {
   protected queryEntities<T1 extends Component>(
     world: World,
@@ -264,5 +267,8 @@ export abstract class System {
       });
   }
 
+  /**
+   * Override this method to implement your own system logic.
+   */
   public abstract Run(world: World): void;
 }

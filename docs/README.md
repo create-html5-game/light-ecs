@@ -1,3 +1,5 @@
+light-ecs / [Exports](modules.md)
+
 # LightECS
 
 ![NPM](https://img.shields.io/npm/v/light-ecs)

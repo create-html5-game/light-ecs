@@ -36,7 +36,6 @@ describe('entity', () => {
     );
     expect(nonExistent).toBeNull();
 
-    world.addComponentToEntity(entityId, TestComponentType2);
     const component2 = world.addComponentToEntity(entityId, TestComponentType2);
     expect(component2).not.toBeFalsy();
 
