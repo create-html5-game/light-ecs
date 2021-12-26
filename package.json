@@ -23,6 +23,7 @@
     "start": "dts watch",
     "test": "dts test",
     "coverage": "dts test --coverage && cat ./coverage/lcov.info | coveralls",
+    "doc": "typedoc --excludePrivate ./src/index.ts",
     "publish:no-bump": "git checkout publish-to-npm && git pull && git merge --no-edit --no-ff main && git push && git checkout main",
     "publish:patch": "git checkout main && bump patch -t \"v%s\" -p && yarn publish:no-bump",
     "publish:minor": "git checkout main && bump minor -t \"v%s\" -p && yarn publish:no-bump",
@@ -69,6 +70,8 @@
     "husky": "^7.0.4",
     "size-limit": "^7.0.4",
     "tslib": "^2.3.1",
+    "typedoc": "^0.22.10",
+    "typedoc-plugin-markdown": "^3.11.8",
     "typescript": "^4.5.4",
     "version-bump-prompt": "^6.1.0"
   },
