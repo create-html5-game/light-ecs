@@ -81,7 +81,7 @@ myComponent.text = 'my text';
 
 ```typescript
 class MySystem extends ECS.System {
-  public Run(world: ECS.World): void {
+  public run(world: ECS.World): void {
     // queryEntities is a protected method from ECS.System
     this.queryEntities(
       world,
@@ -92,6 +92,19 @@ class MySystem extends ECS.System {
     });
   }
 }
+
+const mySystem = new MySystem();
+mySystem.run(world);
+```
+
+### Serialization
+
+```typescript
+const serialized = engine.serializeWorld(world);
+
+// this deserialized object should contain the exact same data as the
+// pre-serialization world object.
+const deserialized = engine.createWorld(serialized);
 ```
 
 ## API References
