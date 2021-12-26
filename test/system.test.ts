@@ -17,7 +17,7 @@ describe('system', () => {
       super();
     }
 
-    public Run(world: World): void {
+    public run(world: World): void {
       this.queryEntities(world, TestComponentType1, TestComponentType2).forEach(
         ([entityId, c1, c2]) => {
           this.callback(entityId, c1, c2);
@@ -50,7 +50,7 @@ describe('system', () => {
       hitC2 = c2 ?? null;
     });
 
-    system.Run(world);
+    system.run(world);
 
     expect(hitEntityId).toEqual(entityId3);
     expect(hitC1).not.toBeFalsy();

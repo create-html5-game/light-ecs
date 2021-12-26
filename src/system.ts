@@ -270,5 +270,5 @@ export abstract class System {
   /**
    * Override this method to implement your own system logic.
    */
-  public abstract Run(world: World): void;
+  public abstract run(world: World): void;
 }
