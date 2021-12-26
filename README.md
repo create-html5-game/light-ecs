@@ -22,7 +22,7 @@ _- [Wikipedia](https://en.wikipedia.org/wiki/Entity_component_system)_
 ## Installation
 
 ```
-npm i light-ecs
+npm i light-ecs --save
 ```
 
 ```
@@ -30,3 +30,70 @@ yarn add light-ecs
 ```
 
 ## Usage
+
+### Import the library
+
+```typescript
+import * as ECS from 'light-ecs';
+```
+
+or
+
+```typescript
+import { Component, ComponentField, Engine, System, World } from 'light-ecs';
+```
+
+### Define your component types
+
+LightECS uses [protobufjs](https://github.com/protobufjs/protobuf.js/) for serialization under the hood. Component types just need to extend from ECS.Component class and then fields can be defined using any approach supported by protobufjs documented [here](https://github.com/protobufjs/protobuf.js/#examples). We recommend using [decorators through typescript](https://github.com/protobufjs/protobuf.js/#usage-with-typescript).
+
+```typescript
+// ECS.Component is a subclass of the Message class from protobufjs.
+class MyComponentType extends ECS.Component {
+  // ECS.ComponentField is simiply an alias for Field.d from protobufjs.
+  @ECS.ComponentField(1, 'uint32')
+  public int: number = 0;
+
+  @ECS.ComponentField(2, 'string')
+  public text: string = '';
+}
+```
+
+### Initialize the engine object
+
+```typescript
+const engine = new ECS.Engine([MyComponentType, ...otherComponentTypes]);
+```
+
+### Create a world, an entity and its components
+
+```typescript
+const world = engine.createWorld();
+
+const entityId = world.createEntity();
+
+const myComponent = world.addComponentToEntity(entityId, MyComponentType);
+myComponent.int = 100;
+myComponent.text = 'my text';
+```
+
+### Build a system that can query entities by their components
+
+```typescript
+class MySystem extends ECS.System {
+  public Run(world: ECS.World): void {
+    // queryEntities is a protected method from ECS.System
+    this.queryEntities(
+      world,
+      MyComponentType
+      // anotherComponentType, ...
+    ).forEach(([entityId, myComponent /*, anotherComponent, ... */]) => {
+      // do something
+    });
+  }
+}
+```
+
+## API Documentation
+
+Under construction.
